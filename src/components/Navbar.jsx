@@ -12,7 +12,7 @@ const Navbar = () => {
         <Link to="/recommendations" className="text-white text-lg hover:underline">
           Recommendations
         </Link>
-        <Link to="/dashboard" className="text-white text-lg hover:underline">
+        <Link to="/frauddetection" className="text-white text-lg hover:underline">
           Dashboard
         </Link>
         <Link to="/register" className="text-white text-lg hover:underline">
