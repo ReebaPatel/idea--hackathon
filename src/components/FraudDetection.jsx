@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 import Papa from 'papaparse';  // For parsing CSV files
+import Navbar from './Navbar';
 
 const FraudDetection = () => {
   const [transactions, setTransactions] = useState([]);
@@ -77,7 +78,8 @@ const FraudDetection = () => {
 
   return (
     <section className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <Navbar />
+      <div className="max-w-7xl mx-auto mt-8">
         {/* Section Header */}
         <div className="text-center mb-10">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
