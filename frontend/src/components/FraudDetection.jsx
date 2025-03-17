@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // Import Framer Motion
 import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 import Papa from 'papaparse';  // For parsing CSV files
+=======
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { FaExclamationTriangle, FaCheckCircle, FaClock } from 'react-icons/fa';
+import Papa from 'papaparse';
+>>>>>>> Stashed changes
 import Navbar from './Navbar';
 
 const FraudDetection = () => {
@@ -65,7 +72,7 @@ const FraudDetection = () => {
   };
 
   // Automatically process transactions every 2 seconds
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       if (currentIndex < transactions.length) {
         processTransactions();
@@ -111,6 +118,7 @@ const FraudDetection = () => {
           />
         </motion.div>
 
+<<<<<<< Updated upstream
         {/* Results Table */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -169,6 +177,99 @@ const FraudDetection = () => {
                 ))}
               </tbody>
             </table>
+=======
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Live Transaction Feed */}
+          <div className="lg:col-span-2 bg-white rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-semibold mb-4 flex items-center">
+              <FaClock className="mr-2 text-blue-400" /> Live Transaction Feed
+            </h3>
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {results.map((transaction, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  className={`p-4 rounded-lg flex justify-between items-center ${
+                    transaction.status === 'Flagged' ? 'bg-red-100' : 'bg-green-100'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    {transaction.status === 'Flagged' ? (
+                      <FaExclamationTriangle className="text-red-400" />
+                    ) : (
+                      <FaCheckCircle className="text-green-400" />
+                    )}
+                    <div>
+                      <p className="text-sm font-medium">{transaction.description}</p>
+                      <p className="text-xs text-gray-500">{transaction.timestamp}</p>
+                      {transaction.status === 'Flagged' && (
+                        <p className="text-xs text-red-500">Reason: {transaction.reason}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-semibold">₹{transaction.amount}</p>
+                    <p className="text-xs text-gray-500">
+                      Confidence: {transaction.confidence}%
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* GenAI Anomaly Detection Demo */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">GenAI Anomaly Detection</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <p className="text-sm">Fraud Detection Accuracy</p>
+                <p className="text-sm font-semibold text-green-500">98%</p>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div
+                  className="bg-green-500 h-2.5 rounded-full"
+                  style={{ width: '98%' }}
+                ></div>
+              </div>
+
+              <div className="flex justify-between items-center">
+                <p className="text-sm">False Positive Rate</p>
+                <p className="text-sm font-semibold text-red-500">5%</p>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div
+                  className="bg-red-500 h-2.5 rounded-full"
+                  style={{ width: '5%' }}
+                ></div>
+              </div>
+
+              <div className="mt-6">
+                <h4 className="text-sm font-medium mb-2">Latest Flagged Transaction</h4>
+                {results.find((t) => t.status === 'Flagged') ? (
+                  <div className="p-4 bg-red-100 rounded-lg">
+                    <p className="text-sm">
+                      {results.find((t) => t.status === 'Flagged').description}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {results.find((t) => t.status === 'Flagged').timestamp}
+                    </p>
+                    <p className="text-xs text-red-500">
+                      Reason: {results.find((t) => t.status === 'Flagged').reason}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Confidence: {results.find((t) => t.status === 'Flagged').confidence}%
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500">No flagged transactions yet.</p>
+                )}
+              </div>
+            </div>
+>>>>>>> Stashed changes
           </div>
         </motion.div>
       </div>

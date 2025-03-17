@@ -4,7 +4,11 @@ import Navbar from "../components/Navbar";
 
 const Recommendations = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+<<<<<<< Updated upstream
   const [recommendedServices, setRecommendedServices] = useState([]); // Updated state to store both numbers and names
+=======
+  const [recommendedServiceNumbers, setRecommendedServiceNumbers] = useState([]);
+>>>>>>> Stashed changes
   const [topTransactions, setTopTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -15,7 +19,11 @@ const Recommendations = () => {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
+<<<<<<< Updated upstream
       setRecommendedServices([]); // Updated state
+=======
+      setRecommendedServiceNumbers([]);
+>>>>>>> Stashed changes
       setError("");
       setShowRecommendations(false);
 
@@ -107,6 +115,7 @@ const Recommendations = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
+<<<<<<< Updated upstream
           <div className="mb-6">
             <textarea
               value={customPrompt}
@@ -115,6 +124,8 @@ const Recommendations = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
+=======
+>>>>>>> Stashed changes
           <button
             onClick={handleViewRecommendations}
             disabled={loading}
@@ -201,6 +212,7 @@ const Recommendations = () => {
               </table>
             </div>
           </motion.div>
+<<<<<<< Updated upstream
 
           {/* Right Side: Recommendations Card and Chatbot */}
           <div className="w-full lg:w-1/2 flex flex-col gap-8">
@@ -253,6 +265,58 @@ const Recommendations = () => {
             </motion.div>
           </div>
         </div>
+=======
+
+          {/* Right Side: Recommendations Card and Chatbot */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-8">
+            {/* Recommendations Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="bg-white rounded-xl shadow-lg p-8"
+            >
+              <h3 className="text-xl font-semibold mb-4 text-blue-900">
+                Recommended Service Numbers
+              </h3>
+              <ul className="space-y-3">
+                {recommendedServiceNumbers.map((service, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                    className="p-4 bg-gray-50 rounded-lg text-gray-700 font-medium"
+                  >
+                    Service #{service}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Chatbot */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+              className="bg-white rounded-xl shadow-lg p-8"
+            >
+              <h3 className="text-xl font-semibold mb-4 text-blue-900">
+                Chatbot Assistance
+              </h3>
+              <div className="h-64 bg-gray-50 rounded-lg p-4">
+                <p className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                  Ask me anything about the recommendations!
+                </p>
+                {/* Add your chatbot component or integration here */}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+       
+        
+>>>>>>> Stashed changes
       </div>
     </div>
   );
