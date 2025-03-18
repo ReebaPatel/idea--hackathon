@@ -4,17 +4,18 @@ import Navbar from "../components/Navbar";
 
 const Recommendations = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [recommendedServiceNumbers, setRecommendedServiceNumbers] = useState([]);
+  const [recommendedServices, setRecommendedServices] = useState([]); // Updated state to store both numbers and names
   const [topTransactions, setTopTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showRecommendations, setShowRecommendations] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState(""); // New state for custom prompt
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setRecommendedServiceNumbers([]);
+      setRecommendedServices([]); // Updated state
       setError("");
       setShowRecommendations(false);
 
@@ -41,6 +42,7 @@ const Recommendations = () => {
     // Create a FormData object to send the file to the backend.
     const formData = new FormData();
     formData.append("file", selectedFile);
+    formData.append("custom_prompt", customPrompt); // Append custom prompt
 
     try {
       const response = await fetch("http://127.0.0.1:5000/process", {
@@ -56,7 +58,10 @@ const Recommendations = () => {
       }
 
       const resData = await response.json();
-      setRecommendedServiceNumbers(resData.recommended_services || []);
+      setRecommendedServices(resData.recommended_services.map((num, index) => ({
+        number: num,
+        name: resData.service_names[index]
+      })));
       setShowRecommendations(true);
     } catch (err) {
       setError(`An error occurred while processing the data: ${err.message}`);
@@ -99,6 +104,14 @@ const Recommendations = () => {
               type="file"
               accept=".csv"
               onChange={handleFileChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div className="mb-6">
+            <textarea
+              value={customPrompt}
+              onChange={(e) => setCustomPrompt(e.target.value)}
+              placeholder="Enter your custom request here..."
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -199,10 +212,10 @@ const Recommendations = () => {
               className="bg-white rounded-xl shadow-lg p-8"
             >
               <h3 className="text-xl font-semibold mb-4 text-blue-900">
-                Recommended Service Numbers
+                Recommended Services
               </h3>
               <ul className="space-y-3">
-                {recommendedServiceNumbers.map((service, index) => (
+                {recommendedServices.map((service, index) => (
                   <motion.li
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
@@ -210,7 +223,7 @@ const Recommendations = () => {
                     transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
                     className="p-4 bg-gray-50 rounded-lg text-gray-700 font-medium"
                   >
-                    Service #{service}
+                    Service #{service.number}: {service.name}
                   </motion.li>
                 ))}
               </ul>
@@ -230,14 +243,16 @@ const Recommendations = () => {
                 <p className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Ask me anything about the recommendations!
                 </p>
-                {/* Add your chatbot component or integration here */}
+                <textarea
+                  value={customPrompt}
+                  onChange={(e) => setCustomPrompt(e.target.value)}
+                  placeholder="Enter your custom request here..."
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
               </div>
             </motion.div>
           </div>
         </div>
-
-       
-        
       </div>
     </div>
   );
